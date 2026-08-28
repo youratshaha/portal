@@ -1,10 +1,9 @@
-<svg fill="none" viewBox="0 0 1000 1000" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
   <foreignObject width="100%" height="100%">
-    <div xmlns="http://www.w3.org/1999/xhtml">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="width: 100vw; height: 100vh; overflow: hidden; background: #0f141c; color: #fff;">
       <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body, html { width: 100vw; height: 100vh; overflow: hidden; background: #0f141c; color: #fff; }
-
+        
         /* Top Bar */
         .top-bar {
           display: flex;
@@ -13,6 +12,7 @@
           padding: 14px 24px;
           background: #182232;
           border-bottom: 1px solid #28374d;
+          width: 100%;
         }
         .logo { font-size: 1.2rem; font-weight: bold; color: #4fa3ff; }
         .search-box {
@@ -31,7 +31,7 @@
           height: calc(100vh - 65px);
           overflow-y: auto;
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
           gap: 16px;
         }
         .game-card {
@@ -91,6 +91,7 @@
         iframe { flex: 1; border: none; width: 100%; height: 100%; }
       </style>
 
+      <!-- Main Hub -->
       <div class="top-bar">
         <div class="logo">Vault</div>
         <input type="text" id="search" class="search-box" placeholder="Search games..." />
@@ -98,6 +99,7 @@
 
       <div class="grid-container" id="grid"></div>
 
+      <!-- In-Page Player -->
       <div id="game-viewer">
         <div class="viewer-nav">
           <button onclick="closeGame()">← Back</button>
@@ -108,7 +110,6 @@
       </div>
 
       <script>
-        // Game Catalog Array
         const library = [
           {
             name: "Metroid Fusion",
@@ -122,7 +123,7 @@
           },
           {
             name: "Spacebar Clicker",
-            thumb: "https://via.placeholder.com/200/182232/4fa3ff?text=Spacebar",
+            thumb: "https://images.igdb.com/igdb/image/upload/t_cover_big/co20u5.png",
             url: "https://spacebar-clicker.com"
           }
         ];
