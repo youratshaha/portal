@@ -1,71 +1,72 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0b0f17;">
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
   <foreignObject width="100%" height="100%">
-    <div xmlns="http://www.w3.org/1999/xhtml" style="width: 100vw; height: 100vh; display: flex; flex-direction: column; background: #0b0f17; color: #f0f6fc; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="width: 100vw; height: 100vh; display: flex; flex-direction: column; background-color: #0b0f17; color: #f0f6fc; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; position: fixed; top: 0; left: 0; margin: 0; padding: 0;">
+      
       <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* Top Bar */
-        .top-bar {
+        .nav-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
           padding: 14px 28px;
-          background: #161f2e;
+          background-color: #161f2e;
           border-bottom: 1px solid #223044;
+          height: 65px;
           flex-shrink: 0;
         }
-        .logo { font-size: 1.25rem; font-weight: 800; color: #38bdf8; letter-spacing: 0.5px; }
-        .search-box {
-          width: 380px;
+        .nav-logo { font-size: 1.25rem; font-weight: 800; color: #38bdf8; letter-spacing: 0.5px; }
+        .nav-search {
+          width: 360px;
           max-width: 50%;
-          padding: 10px 16px;
-          background: #0b0f17;
+          padding: 9px 14px;
+          background-color: #0b0f17;
           border: 1px solid #223044;
           border-radius: 8px;
           color: #fff;
           outline: none;
           font-size: 0.9rem;
         }
-        .search-box:focus { border-color: #38bdf8; }
+        .nav-search:focus { border-color: #38bdf8; }
 
-        /* Game Grid */
-        .grid-container {
-          padding: 28px;
+        .game-grid {
+          padding: 24px 28px;
           flex: 1;
           overflow-y: auto;
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-          gap: 20px;
+          gap: 18px;
           align-content: start;
         }
-        .game-card {
-          background: #161f2e;
+
+        .card-item {
+          background-color: #161f2e;
           border: 1px solid #223044;
           border-radius: 12px;
           overflow: hidden;
           cursor: pointer;
           display: flex;
           flex-direction: column;
-          transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+          transition: transform 0.15s ease, border-color 0.15s ease;
+          text-decoration: none;
         }
-        .game-card:hover {
+        .card-item:hover {
           transform: translateY(-4px);
           border-color: #38bdf8;
-          box-shadow: 0 8px 20px rgba(0,0,0,0.5);
         }
-        .game-thumb {
+        .card-banner {
           width: 100%;
-          height: 150px;
+          height: 140px;
           object-fit: cover;
           display: block;
-          background: #1e293b;
+          background-color: #1e293b;
         }
-        .game-info {
-          padding: 12px;
+        .card-title-box {
+          padding: 12px 10px;
           text-align: center;
-          background: #161f2e;
+          background-color: #161f2e;
         }
-        .game-title {
+        .card-text {
           font-size: 0.85rem;
           font-weight: 600;
           color: #f0f6fc;
@@ -74,28 +75,27 @@
           text-overflow: ellipsis;
         }
 
-        /* Player View */
-        #game-viewer {
+        #game-frame-view {
           display: none;
           position: fixed;
           top: 0; left: 0;
           width: 100vw; height: 100vh;
-          background: #000;
-          z-index: 9999;
+          background-color: #000;
+          z-index: 99999;
           flex-direction: column;
         }
-        .viewer-nav {
+        .frame-nav {
           display: flex;
           justify-content: space-between;
           align-items: center;
           padding: 10px 20px;
-          background: #111;
+          background-color: #111;
           border-bottom: 1px solid #222;
           height: 50px;
           flex-shrink: 0;
         }
-        .viewer-nav button {
-          background: #222;
+        .frame-btn {
+          background-color: #222;
           color: #fff;
           border: 1px solid #444;
           padding: 6px 14px;
@@ -103,26 +103,27 @@
           cursor: pointer;
           font-weight: 600;
         }
-        .viewer-nav button:hover { background: #333; }
+        .frame-btn:hover { background-color: #333; }
         iframe { flex: 1; border: none; width: 100%; height: calc(100vh - 50px); }
       </style>
 
-      <!-- Main Hub -->
-      <div class="top-bar">
-        <div class="logo">Vault</div>
-        <input type="text" id="search" class="search-box" placeholder="Search library..." />
+      <!-- Nav -->
+      <div class="nav-header">
+        <div class="nav-logo">Vault</div>
+        <input type="text" id="search" class="nav-search" placeholder="Search games..." />
       </div>
 
-      <div class="grid-container" id="grid"></div>
+      <!-- Grid -->
+      <div class="game-grid" id="grid"></div>
 
-      <!-- In-Page Player -->
-      <div id="game-viewer">
-        <div class="viewer-nav">
-          <button onclick="closeGame()">← Back</button>
-          <span id="game-label" style="font-weight: bold; color: #fff;"></span>
-          <button onclick="toggleFS()">Fullscreen</button>
+      <!-- Player Frame -->
+      <div id="game-frame-view">
+        <div class="frame-nav">
+          <button class="frame-btn" onclick="closeGame()">← Back to Library</button>
+          <span id="active-title" style="font-weight: bold; color: #fff;"></span>
+          <button class="frame-btn" onclick="toggleFS()">Fullscreen</button>
         </div>
-        <iframe id="frame" src=""></iframe>
+        <iframe id="game-iframe" src=""></iframe>
       </div>
 
       <script type="text/javascript">
@@ -130,60 +131,60 @@
         const library = [
           {
             name: "Metroid Fusion",
-            thumb: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1xau.png",
+            thumb: "https://upload.wikimedia.org/wikipedia/en/8/86/Metroid_Fusion_box.jpg",
             url: "https://emulatorjs.org/demo/?core=gba"
           },
           {
             name: "Wario Land 4",
-            thumb: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1xaz.png",
+            thumb: "https://upload.wikimedia.org/wikipedia/en/f/f6/Wario_Land_4_Coverart.png",
             url: "https://emulatorjs.org/demo/?core=gba"
           },
           {
             name: "Diablo",
-            thumb: "https://images.igdb.com/igdb/image/upload/t_cover_big/co20u5.png",
+            thumb: "https://upload.wikimedia.org/wikipedia/en/3/3a/Diablo_Coverart.png",
             url: "https://d07riv.github.io/diabloweb/"
           },
           {
             name: "Spacebar Clicker",
-            thumb: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1r7h.png",
+            thumb: "https://raw.githubusercontent.com/github/explore/main/topics/javascript/javascript.png",
             url: "https://spacebar-clicker.com"
           }
         ];
 
         const grid = document.getElementById('grid');
         const search = document.getElementById('search');
-        const viewer = document.getElementById('game-viewer');
-        const frame = document.getElementById('frame');
-        const label = document.getElementById('game-label');
+        const viewer = document.getElementById('game-frame-view');
+        const iframe = document.getElementById('game-iframe');
+        const titleLabel = document.getElementById('active-title');
 
         function render(items) {
           grid.innerHTML = items.map(function(item) {
-            const originalIndex = library.indexOf(item);
-            return '<div class="game-card" onclick="openGameIndex(' + originalIndex + ')">' +
-                     '<img class="game-thumb" src="' + item.thumb + '" referrerpolicy="no-referrer" loading="lazy" />' +
-                     '<div class="game-info">' +
-                       '<div class="game-title">' + item.name + '</div>' +
+            const index = library.indexOf(item);
+            return '<div class="card-item" onclick="openGame(' + index + ')">' +
+                     '<img class="card-banner" src="' + item.thumb + '" crossorigin="anonymous" />' +
+                     '<div class="card-title-box">' +
+                       '<div class="card-text">' + item.name + '</div>' +
                      '</div>' +
                    '</div>';
           }).join('');
         }
 
-        window.openGameIndex = function(index) {
-          const item = library[index];
+        window.openGame = function(i) {
+          const item = library[i];
           if (!item) return;
-          label.innerText = item.name;
-          frame.src = item.url;
+          titleLabel.innerText = item.name;
+          iframe.src = item.url;
           viewer.style.display = 'flex';
         };
 
         window.closeGame = function() {
           viewer.style.display = 'none';
-          frame.src = '';
+          iframe.src = '';
         };
 
         window.toggleFS = function() {
           if (!document.fullscreenElement) {
-            frame.requestFullscreen();
+            iframe.requestFullscreen();
           } else {
             document.exitFullscreen();
           }
@@ -191,15 +192,16 @@
 
         search.addEventListener('input', function(e) {
           const val = e.target.value.toLowerCase();
-          const filtered = library.filter(function(i) {
+          const matches = library.filter(function(i) {
             return i.name.toLowerCase().indexOf(val) !== -1;
           });
-          render(filtered);
+          render(matches);
         });
 
         render(library);
       // ]]>
       </script>
+
     </div>
   </foreignObject>
 </svg>
